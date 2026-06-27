@@ -1,12 +1,21 @@
 from fastapi import FastAPI
 
-from app.config.settings import DATABASE_URL
+from app.database.database import Base, engine
 
-app = FastAPI()
+# Import models
+from app.models.user import User
+
+# Create all database tables
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI(
+    title="Flutter Chat Backend",
+    version="1.0.0"
+)
+
 
 @app.get("/")
 def home():
     return {
-        "database": DATABASE_URL
-        # "message": "Welcome to Flutter Chat Backend 🚀"
+        "message": "Backend Running 🚀"
     }
