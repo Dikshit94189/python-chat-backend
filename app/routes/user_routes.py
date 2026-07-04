@@ -1,4 +1,4 @@
-print("user_routes.py loaded")
+# print("user_routes.py loaded")
 
 
 from fastapi import APIRouter, Depends, HTTPException
