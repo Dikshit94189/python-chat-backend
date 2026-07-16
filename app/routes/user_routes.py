@@ -11,6 +11,8 @@ from app.services.user_service import UserService
 
 from app.schemas.user_login import UserLogin
 from app.schemas.token import Token
+from app.security.auth import get_current_user
+from app.models.user import User
 
 
 router = APIRouter(
@@ -52,3 +54,9 @@ def login(
         raise HTTPException(
             status_code=401,
             detail=str(e))
+    
+@router.get("/me", response_model=UserResponse)
+def get_me(
+    current_user: User = Depends(get_current_user)
+):
+    return current_user
