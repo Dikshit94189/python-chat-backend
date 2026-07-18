@@ -4,6 +4,7 @@ from app.database.database import Base, engine
 
 # Import models
 from app.models.user import User
+from app.models.conversation import Conversation
 
 # Import routes
 from app.routes.user_routes import router as user_router
