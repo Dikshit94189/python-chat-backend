@@ -11,3 +11,7 @@ database.py
         │
         ▼
 FastAPI
+
+
+├── security
+│      auth.py   ✅ JWT logic lives here
