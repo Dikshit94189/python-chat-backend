@@ -11,6 +11,8 @@ from app.routes.user_routes import router as user_router
 from app.routes.conversation_routes import router as conversation_router
 
 
+from app.models.conversation_participant import ConversationParticipant
+
 # Create database tables
 Base.metadata.create_all(bind=engine)
 
