@@ -5,8 +5,8 @@ from app.models.conversation import Conversation
 
 class ConversationRepository:
 
-    def create_conversation(self, db: Session):
-        conversation = Conversation()
+    def create_conversation(self, db: Session, created_by: int):
+        conversation = Conversation(created_by=created_by)
 
         db.add(conversation)
         db.commit()
