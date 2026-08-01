@@ -7,6 +7,10 @@ from app.services.conversation_service import ConversationService
 from app.security.auth import get_current_user
 from app.models.user import User
 
+from app.schemas.conversation_create import ConversationCreate
+from app.security.auth import get_current_user
+from app.models.user import User
+
 
 router = APIRouter(
     prefix="/conversations",
@@ -18,13 +22,25 @@ conversation_service = ConversationService()
 
 @router.post("/", response_model=ConversationResponse)
 def create_conversation(
+    conversation: ConversationCreate,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user)   # <-- IMPORTANT
 ):
     return conversation_service.create_conversation(
-        db,
-        created_by=current_user.id
+        db=db,
+        created_by=current_user.id,
+        receiver_id=conversation.receiver_id
     )
+
+# @router.post("/", response_model=ConversationResponse)
+# def create_conversation(
+#     db: Session = Depends(get_db),
+#     current_user: User = Depends(get_current_user)
+# ):
+#     return conversation_service.create_conversation(
+#         db,
+#         created_by=current_user.id
+#     )
 
 
 @router.get("/", response_model=list[ConversationResponse])

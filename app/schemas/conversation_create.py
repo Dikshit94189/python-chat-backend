@@ -1,4 +1,4 @@
 from pydantic import BaseModel
 
-class ConservationCreate(BaseModel):
+class ConversationCreate(BaseModel):
     receiver_id: int
