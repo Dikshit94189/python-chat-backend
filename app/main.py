@@ -12,6 +12,7 @@ from app.routes.conversation_routes import router as conversation_router
 
 
 from app.models.conversation_participant import ConversationParticipant
+from app.models.message import Message
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
