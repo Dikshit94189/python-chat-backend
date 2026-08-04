@@ -6,6 +6,8 @@ from app.database.database import Base, engine
 from app.models.user import User
 from app.models.conversation import Conversation
 
+from app.routes.message_routes import router as message_router
+
 # Import routes
 from app.routes.user_routes import router as user_router
 from app.routes.conversation_routes import router as conversation_router
@@ -25,7 +27,7 @@ app = FastAPI(
 # Register routes
 app.include_router(user_router)
 app.include_router(conversation_router)
-
+app.include_router(message_router)
 
 @app.get("/")   
 def home():
