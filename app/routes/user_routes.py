@@ -1,14 +1,13 @@
 # print("user_routes.py loaded")
 
 
-from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.database.database import get_db
 from app.schemas.user_create import UserCreate
 from app.schemas.user_response import UserResponse
 from app.services.user_service import UserService
-
+from fastapi import APIRouter, Depends, HTTPException, Form
 from app.schemas.user_login import UserLogin
 from app.schemas.token import Token
 from app.security.auth import get_current_user
@@ -34,26 +33,24 @@ def register(
 @router.post(
     "/login",
     response_model=Token
-)    
-
+)
 def login(
-    user:UserLogin,
-    db:Session = Depends(get_db)
+    username: str = Form(...),
+    password: str = Form(...),
+    db: Session = Depends(get_db)
 ):
-    
     try:
-        
         return UserService.login_user(
             db,
-            user.email,
-            user.password
+            username,
+            password
         )
-    
-    except Exception as e:
 
+    except Exception as e:
         raise HTTPException(
             status_code=401,
-            detail=str(e))
+            detail=str(e)
+        )
     
 @router.get("/me", response_model=UserResponse)
 def get_me(
