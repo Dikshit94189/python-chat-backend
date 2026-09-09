@@ -1,35 +1,109 @@
+# from fastapi import FastAPI
+# from fastapi.middleware.cors import CORSMiddleware
+
+# from app.database.database import Base, engine
+# # Import models
+# from app.models.user import User
+# from app.models.conversation import Conversation
+
+# from app.routes.message_routes import router as message_router
+
+# # Import routes
+# from app.routes.user_routes import router as user_router
+# from app.routes.conversation_routes import router as conversation_router
+
+
+# from app.models.conversation_participant import ConversationParticipant
+# from app.models.message import Message
+
+# # Create database tables
+# Base.metadata.create_all(bind=engine)
+
+# app = FastAPI(
+#     title="Flutter Chat Backend",
+#     version="1.0.0"
+# )
+
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
+# # Register routes
+# app.include_router(user_router)
+# app.include_router(conversation_router)
+# app.include_router(message_router)
+
+# @app.get("/")   
+# def home():
+#     return {
+#         "message": "Backend Running 🚀"
+#     }
+
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.database.database import Base, engine
 
 # Import models
 from app.models.user import User
 from app.models.conversation import Conversation
-
-from app.routes.message_routes import router as message_router
+from app.models.conversation_participant import ConversationParticipant
+from app.models.message import Message
 
 # Import routes
 from app.routes.user_routes import router as user_router
 from app.routes.conversation_routes import router as conversation_router
+from app.routes.message_routes import router as message_router
 
 
-from app.models.conversation_participant import ConversationParticipant
-from app.models.message import Message
-
+# --------------------------------------------------
 # Create database tables
+# --------------------------------------------------
+
 Base.metadata.create_all(bind=engine)
+
+
+# --------------------------------------------------
+# Create FastAPI application
+# --------------------------------------------------
 
 app = FastAPI(
     title="Flutter Chat Backend",
     version="1.0.0"
 )
 
-# Register routes
+
+# --------------------------------------------------
+# CORS Configuration
+# --------------------------------------------------
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+# --------------------------------------------------
+# Register Routes
+# --------------------------------------------------
+
 app.include_router(user_router)
 app.include_router(conversation_router)
 app.include_router(message_router)
 
-@app.get("/")   
+
+# --------------------------------------------------
+# Home Route
+# --------------------------------------------------
+
+@app.get("/")
 def home():
     return {
         "message": "Backend Running 🚀"
